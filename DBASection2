@@ -1,0 +1,439 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyOZea0oaLilHkYKhpMHE0qm",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/v-lankani/GreenFuture-/blob/main/DBASection2\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 6,
+      "metadata": {
+        "id": "WzV1ygkyZAGi"
+      },
+      "outputs": [],
+      "source": [
+        "import pandas as pd\n",
+        "# Import dataset\n",
+        "df = pd.read_csv(\"https://raw.githubusercontent.com/v-lankani/bookStore/refs/heads/main/bookstore_transactions(1).csv\")\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Check for duplicates\n",
+        "print(f\"Duplicate rows: {df.duplicated().sum()}\")\n",
+        "# Verify row count\n",
+        "print(f\"Total rows: {len(df)}\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "zOcL46yscGZ-",
+        "outputId": "2d66820f-8fb7-4206-a5b7-216d28928cef"
+      },
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Duplicate rows: 0\n",
+            "Total rows: 3500\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Load your dataset\n",
+        "df = pd.read_csv('https://raw.githubusercontent.com/v-lankani/bookStore/refs/heads/main/bookstore_transactions(1).csv')\n",
+        "\n",
+        "# Check for missing values\n",
+        "print(df.isnull().sum())"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "UXT-ItZwdpqW",
+        "outputId": "cd7e999a-4a0e-456c-9d89-2b85b5b86ef7"
+      },
+      "execution_count": 12,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Transaction ID          0\n",
+            "Customer ID             0\n",
+            "Book Title              0\n",
+            "Author                  0\n",
+            "Genre                   0\n",
+            "Purchase Method         0\n",
+            "Payment Method          0\n",
+            "Stock Before            0\n",
+            "Stock After             0\n",
+            "Loyalty Points          0\n",
+            "Promotion Applied    1575\n",
+            "Discount Applied        0\n",
+            "Order Status            0\n",
+            "Restock Triggered       0\n",
+            "dtype: int64\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df_cleaned = df.dropna()"
+      ],
+      "metadata": {
+        "id": "A0sqq_qmev58"
+      },
+      "execution_count": 13,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df_cleaned = df.dropna(axis=1)"
+      ],
+      "metadata": {
+        "id": "oQF0IILKe_Vi"
+      },
+      "execution_count": 14,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df_filled = df.fillna(method='ffill')"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "C9Xg-MCHfCsW",
+        "outputId": "4cd0dfb6-c6e7-42e2-8e1c-e2ade4aad9a0"
+      },
+      "execution_count": 16,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "<ipython-input-16-c4b20f3456cd>:1: FutureWarning: DataFrame.fillna with 'method' is deprecated and will raise in a future version. Use obj.ffill() or obj.bfill() instead.\n",
+            "  df_filled = df.fillna(method='ffill')\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(df.columns)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "pFiBF_ArfQ4V",
+        "outputId": "117d6447-f0f0-43ab-e05d-091fd0488330"
+      },
+      "execution_count": 20,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Index(['Transaction ID', 'Customer ID', 'Book Title', 'Author', 'Genre',\n",
+            "       'Purchase Method', 'Payment Method', 'Stock Before', 'Stock After',\n",
+            "       'Loyalty Points', 'Promotion Applied', 'Discount Applied',\n",
+            "       'Order Status', 'Restock Triggered'],\n",
+            "      dtype='object')\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df_interpolated = df.interpolate()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "SbhQ5bnKff8m",
+        "outputId": "b2b6f6ec-1f92-4674-e95e-50ba9563877a"
+      },
+      "execution_count": 18,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "<ipython-input-18-592beefe07c1>:1: FutureWarning: DataFrame.interpolate with object dtype is deprecated and will raise in a future version. Call obj.infer_objects(copy=False) before interpolating instead.\n",
+            "  df_interpolated = df.interpolate()\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(df.isnull().sum())"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "9J-i-5Sd9wwE",
+        "outputId": "e3a5c997-209d-49ba-d395-369c36030a1f"
+      },
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Transaction ID          0\n",
+            "Customer ID             0\n",
+            "Book Title              0\n",
+            "Author                  0\n",
+            "Genre                   0\n",
+            "Purchase Method         0\n",
+            "Payment Method          0\n",
+            "Stock Before            0\n",
+            "Stock After             0\n",
+            "Loyalty Points          0\n",
+            "Promotion Applied    1575\n",
+            "Discount Applied        0\n",
+            "Order Status            0\n",
+            "Restock Triggered       0\n",
+            "dtype: int64\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['Stock After'] = df['Stock After'].fillna(df['Stock After'].mean())"
+      ],
+      "metadata": {
+        "id": "uCiGAz9Qgoi_"
+      },
+      "execution_count": 11,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "import glob\n",
+        "\n",
+        "# List all CSV files\n",
+        "file_list = ['https://raw.githubusercontent.com/v-lankani/data/refs/heads/main/Data/bookstore_transactions(1).csv', 'https://raw.githubusercontent.com/v-lankani/data/refs/heads/main/Data/greenfuture_ideas_dataset(1).csv']\n",
+        "\n",
+        "# Read and concatenate all files\n",
+        "df = pd.concat([pd.read_csv(file) for file in file_list], ignore_index=True)\n",
+        "\n",
+        "# Now df contains data from all files\n",
+        "print(df.head())"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "kMxKStCf9njT",
+        "outputId": "2349701b-aa42-4d23-d2f1-be142d30faf7"
+      },
+      "execution_count": 10,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "  Transaction ID Customer ID            Book Title          Author      Genre  \\\n",
+            "0       59b278fe      914e0b                  1984   George Orwell  Dystopian   \n",
+            "1       8f90d6f6      c8d80d              Becoming  Michelle Obama  Biography   \n",
+            "2       a116662e      dba9d8  The Midnight Library       Matt Haig    Fantasy   \n",
+            "3       2db9cc65      7cdf6c                  Dune   Frank Herbert     Sci-Fi   \n",
+            "4       d99cc2d4      eb00af                  Dune   Frank Herbert     Sci-Fi   \n",
+            "\n",
+            "  Purchase Method  Payment Method  Stock Before  Stock After  Loyalty Points  \\\n",
+            "0          Online            Cash          25.0         22.0            30.0   \n",
+            "1          Online  Online Payment          14.0         12.0            20.0   \n",
+            "2          Online            Cash          21.0         18.0            30.0   \n",
+            "3          Online            Cash          26.0         24.0            20.0   \n",
+            "4          Online            Card           6.0          5.0            10.0   \n",
+            "\n",
+            "   ... Office Location  Department Idea Submission Date Idea Title  \\\n",
+            "0  ...             NaN         NaN                  NaN        NaN   \n",
+            "1  ...             NaN         NaN                  NaN        NaN   \n",
+            "2  ...             NaN         NaN                  NaN        NaN   \n",
+            "3  ...             NaN         NaN                  NaN        NaN   \n",
+            "4  ...             NaN         NaN                  NaN        NaN   \n",
+            "\n",
+            "  Idea Category Number of Votes Collaboration Status Approval Status  \\\n",
+            "0           NaN             NaN                  NaN             NaN   \n",
+            "1           NaN             NaN                  NaN             NaN   \n",
+            "2           NaN             NaN                  NaN             NaN   \n",
+            "3           NaN             NaN                  NaN             NaN   \n",
+            "4           NaN             NaN                  NaN             NaN   \n",
+            "\n",
+            "  Implementation Status Security Concern Flag  \n",
+            "0                   NaN                   NaN  \n",
+            "1                   NaN                   NaN  \n",
+            "2                   NaN                   NaN  \n",
+            "3                   NaN                   NaN  \n",
+            "4                   NaN                   NaN  \n",
+            "\n",
+            "[5 rows x 25 columns]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "import os\n",
+        "\n",
+        "# Path to your Data folder\n",
+        "data_folder = \"https://github.com/v-lankani/data\"\n",
+        "import pandas as pd\n",
+        "import os\n",
+        "\n",
+        "# Path to your Data folder\n",
+        "data_folder = \"https://github.com/v-lankani/data\"\n",
+        "\n",
+        "# List all data file paths in the folder (assuming CSV for this example)\n",
+        "file_paths = ['https://raw.githubusercontent.com/v-lankani/data/refs/heads/main/Data/bookstore_transactions(1).csv', 'https://raw.githubusercontent.com/v-lankani/data/refs/heads/main/Data/greenfuture_ideas_dataset(1).csv']\n",
+        "\n",
+        "# Read each file into a DataFrame and store them in a list\n",
+        "dfs = [pd.read_csv(fp) for fp in file_paths]\n",
+        "\n",
+        "# Concatenate all individual DataFrames\n",
+        "combined_df = pd.concat(dfs, ignore_index=True)\n",
+        "\n",
+        "# --- Verification Steps ---\n",
+        "\n",
+        "# 1. Check the total number of rows: should match the sum of rows in all files\n",
+        "total_rows_individual = sum(len(df) for df in dfs)\n",
+        "total_rows_combined = len(combined_df)\n",
+        "print(\"Total rows in individual files:\", total_rows_individual)\n",
+        "print(\"Total rows in combined DataFrame:\", total_rows_combined)\n",
+        "assert total_rows_individual == total_rows_combined, \"Row count mismatch!\"\n",
+        "\n",
+        "# 2. Check for duplication: if rows are unique in source files, combined should have no duplicates\n",
+        "# (Adjust subset parameter as needed for your data's unique columns)\n",
+        "duplicates = combined_df.duplicated()\n",
+        "print(\"Number of duplicate rows in combined DataFrame:\", duplicates.sum())\n",
+        "\n",
+        "# 3. Optionally, verify that each row from individual files is present in the combined DataFrame\n",
+        "for idx, df in enumerate(dfs):\n",
+        "    # Merge the individual file's DataFrame with the combined one; check if all rows match\n",
+        "    merged = pd.merge(df, combined_df, how='outer', indicator=True)\n",
+        "    missing = merged[merged['_merge'] == 'left_only']\n",
+        "    assert missing.empty, f\"Missing rows from file {file_paths[idx]}\"\n",
+        "    print(f\"All rows from {file_paths[idx]} are present in the combined DataFrame.\")\n",
+        "\n",
+        "print(\"Verification complete: No data loss or duplication detected.\")\n",
+        "dfs = [pd.read_csv(fp) for fp in file_paths]\n",
+        "\n",
+        "# Concatenate all individual DataFrames\n",
+        "combined_df = pd.concat(dfs, ignore_index=True)\n",
+        "\n",
+        "# --- Verification Steps ---\n",
+        "\n",
+        "# 1. Check the total number of rows: should match the sum of rows in all files\n",
+        "total_rows_individual = sum(len(df) for df in dfs)\n",
+        "total_rows_combined = len(combined_df)\n",
+        "print(\"Total rows in individual files:\", total_rows_individual)\n",
+        "print(\"Total rows in combined DataFrame:\", total_rows_combined)\n",
+        "assert total_rows_individual == total_rows_combined, \"Row count mismatch!\"\n",
+        "\n",
+        "# 2. Check for duplication: if rows are unique in source files, combined should have no duplicates\n",
+        "# (Adjust subset parameter as needed for your data's unique columns)\n",
+        "duplicates = combined_df.duplicated()\n",
+        "print(\"Number of duplicate rows in combined DataFrame:\", duplicates.sum())\n",
+        "\n",
+        "# 3. Optionally, verify that each row from individual files is present in the combined DataFrame\n",
+        "for idx, df in enumerate(dfs):\n",
+        "    # Merge the individual file's DataFrame with the combined one; check if all rows match\n",
+        "    merged = pd.merge(df, combined_df, how='outer', indicator=True)\n",
+        "    missing = merged[merged['_merge'] == 'left_only']\n",
+        "    assert missing.empty, f\"Missing rows from file {file_paths[idx]}\"\n",
+        "    print(f\"All rows from {file_paths[idx]} are present in the combined DataFrame.\")\n",
+        "\n",
+        "print(\"Verification complete: No data loss or duplication detected.\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "K-RXcyKZBMjE",
+        "outputId": "c93cb817-33bd-4cd7-d172-c60ae7425d5f"
+      },
+      "execution_count": 15,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Total rows in individual files: 6500\n",
+            "Total rows in combined DataFrame: 6500\n",
+            "Number of duplicate rows in combined DataFrame: 0\n",
+            "All rows from https://raw.githubusercontent.com/v-lankani/data/refs/heads/main/Data/bookstore_transactions(1).csv are present in the combined DataFrame.\n",
+            "All rows from https://raw.githubusercontent.com/v-lankani/data/refs/heads/main/Data/greenfuture_ideas_dataset(1).csv are present in the combined DataFrame.\n",
+            "Verification complete: No data loss or duplication detected.\n",
+            "Total rows in individual files: 6500\n",
+            "Total rows in combined DataFrame: 6500\n",
+            "Number of duplicate rows in combined DataFrame: 0\n",
+            "All rows from https://raw.githubusercontent.com/v-lankani/data/refs/heads/main/Data/bookstore_transactions(1).csv are present in the combined DataFrame.\n",
+            "All rows from https://raw.githubusercontent.com/v-lankani/data/refs/heads/main/Data/greenfuture_ideas_dataset(1).csv are present in the combined DataFrame.\n",
+            "Verification complete: No data loss or duplication detected.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "Or81dJ9qCwn8"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
